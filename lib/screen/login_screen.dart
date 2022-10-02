@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:catatan_harian/screen/register_screen.dart';
 
+import '../services/firebase_auth_services.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -9,6 +11,23 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  FirebaseAuthServices fbServices = FirebaseAuthServices();
+
+  login() async {
+    fbServices
+        .loginAkun(
+            email: emailController.text, password: passwordController.text)
+        .then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${value?.user?.email} success login'),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,9 +41,10 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 30,
             ),
             TextField(
+              controller: emailController,
               decoration: InputDecoration(
-                labelText: 'Username',
-                hintText: 'Masukkan Username',
+                labelText: 'Email',
+                hintText: 'Masukkan Email',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -34,6 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 10,
             ),
             TextField(
+              controller: passwordController,
               decoration: InputDecoration(
                 labelText: 'Password',
                 hintText: 'Masukkan Password',
@@ -46,7 +67,9 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 10,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                login();
+              },
               child: Text('Login'),
             ),
             SizedBox(

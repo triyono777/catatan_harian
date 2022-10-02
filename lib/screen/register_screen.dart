@@ -1,3 +1,4 @@
+import 'package:catatan_harian/services/firebase_auth_services.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -8,6 +9,23 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  FirebaseAuthServices fbServices = FirebaseAuthServices();
+
+  register() async {
+    fbServices
+        .registerAkun(
+            email: emailController.text, password: passwordController.text)
+        .then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${value?.user?.email} success'),
+        ),
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +38,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SizedBox(
               height: 30,
             ),
+            SizedBox(
+              height: 10,
+            ),
             TextField(
+              controller: emailController,
               decoration: InputDecoration(
-                labelText: 'Nama',
-                hintText: 'Masukkan Nama',
+                labelText: 'Email',
+                hintText: 'Masukkan Email',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -33,18 +55,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: 10,
             ),
             TextField(
-              decoration: InputDecoration(
-                labelText: 'Username',
-                hintText: 'Masukkan Username',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(15),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            TextField(
+              controller: passwordController,
+              obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
                 hintText: 'Masukkan Password',
@@ -57,7 +69,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: 10,
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                register();
+              },
               child: Text('Register'),
             ),
             SizedBox(
