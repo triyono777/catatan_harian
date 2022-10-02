@@ -1,3 +1,4 @@
+import 'package:catatan_harian/screen/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:catatan_harian/screen/register_screen.dart';
 
@@ -23,6 +24,11 @@ class _LoginScreenState extends State<LoginScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${value?.user?.email} success login'),
+        ),
+      );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => HomeScreen(),
         ),
       );
     });

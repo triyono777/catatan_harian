@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class FirebaseAuthServices {
   final FirebaseAuth _fbAuth = FirebaseAuth.instance;
@@ -18,6 +19,10 @@ class FirebaseAuthServices {
   }) async {
     var user = await _fbAuth.signInWithEmailAndPassword(
         email: email, password: password);
+    var box = await Hive.openBox('userBox');
+    box.put('uid', user.user?.uid);
+    box.put('email', user.user?.email);
+
     return user;
   }
 }
