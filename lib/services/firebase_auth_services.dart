@@ -25,4 +25,10 @@ class FirebaseAuthServices {
 
     return user;
   }
+
+  Future logout() async {
+    _fbAuth.signOut();
+    var box = Hive.box('userBox');
+    box.clear();
+  }
 }

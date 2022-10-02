@@ -1,3 +1,6 @@
+import 'package:catatan_harian/screen/login_screen.dart';
+import 'package:catatan_harian/screen/splash_screen.dart';
+import 'package:catatan_harian/services/firebase_auth_services.dart';
 import 'package:catatan_harian/services/firebase_db_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -168,6 +171,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Home Screen'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuthServices().logout().then((value) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (_) => LoginScreen(),
+                    ),
+                  );
+                });
+              },
+              icon: Icon(Icons.exit_to_app))
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
