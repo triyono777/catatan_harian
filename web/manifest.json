@@ -1,6 +1,6 @@
 {
-    "name": "catatan_harian",
-    "short_name": "catatan_harian",
+    "name": "Catatan Harian",
+    "short_name": "Catatan Harian",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
