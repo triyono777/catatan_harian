@@ -16,24 +16,6 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   FirebaseAuthServices fbServices = FirebaseAuthServices();
 
-  login() async {
-    fbServices
-        .loginAkun(
-            email: emailController.text, password: passwordController.text)
-        .then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${value?.user?.email} success login'),
-        ),
-      );
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (_) => HomeScreen(),
-        ),
-      );
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,5 +76,23 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  login() async {
+    fbServices
+        .loginAkun(
+            email: emailController.text, password: passwordController.text)
+        .then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${value?.user?.email} success login'),
+        ),
+      );
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (_) => HomeScreen(),
+        ),
+      );
+    });
   }
 }

@@ -13,18 +13,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   FirebaseAuthServices fbServices = FirebaseAuthServices();
 
-  register() async {
-    fbServices
-        .registerAkun(
-            email: emailController.text, password: passwordController.text)
-        .then((value) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${value?.user?.email} success'),
-        ),
-      );
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,4 +75,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
+  register() async {
+    fbServices
+        .registerAkun(
+            email: emailController.text, password: passwordController.text)
+        .then((value) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${value?.user?.email} success'),
+        ),
+      );
+    });
+  }
+
 }

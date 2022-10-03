@@ -14,16 +14,96 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<QuerySnapshot<Map<String, dynamic>>> getData() async {
-    var box = await Hive.openBox('userBox');
-    var uid = await box.get('uid');
-    var hasil = await FirebaseDBServices().getCatatan(uid);
-    // setState(() {});
-    return hasil;
-  }
-
   TextEditingController judulController = TextEditingController();
   TextEditingController isiController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    // getData();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Home Screen'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                FirebaseAuthServices().logout().then((value) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (_) => LoginScreen(),
+                    ),
+                  );
+                });
+              },
+              icon: Icon(Icons.exit_to_app))
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          addCatatan(context);
+        },
+        child: Icon(Icons.add),
+      ),
+      body: FutureBuilder<QuerySnapshot>(
+          future: getData(),
+          builder: (context, snapshot) {
+            print(snapshot.connectionState);
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data?.docs.isEmpty ?? true) {
+                return Center(child: Text('no data'));
+              } else {
+                return ListView.builder(
+                  padding: EdgeInsets.all(8),
+                  itemCount: snapshot.data?.docs.length ?? 0,
+                  itemBuilder: (_, index) {
+                    var data = snapshot.data;
+                    return Dismissible(
+                      key: Key('${data?.docs[index]}'),
+                      background: Container(
+                        color: Colors.red,
+                      ),
+                      confirmDismiss: (_) async {
+                        FirebaseDBServices()
+                            .deleteCatatan(data?.docs[index].id);
+                        setState(() {});
+                        return true;
+                      },
+                      onDismissed: (_) {
+                        // showDialog(context: context, builder: );
+                      },
+                      child: Card(
+                        child: ListTile(
+                          title: Text('${data?.docs[index]['judul']}'),
+                          subtitle: Text('tanggal catatan'),
+                          trailing: IconButton(
+                            onPressed: () {
+                              editCatatan(context,
+                                  uidCatatn: '${data?.docs[index].id}',
+                                  judul: '${data?.docs[index]['judul']}',
+                                  isi: '${data?.docs[index]['isi']}');
+                            },
+                            icon: Icon(Icons.edit),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+            } else {
+              return Center(child: Text(''));
+            }
+          }),
+    );
+  }
+
   addCatatan(BuildContext context) async {
     var hasil = await showDialog(
         context: context,
@@ -161,90 +241,11 @@ class _HomeScreenState extends State<HomeScreen> {
     isiController.clear();
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    // getData();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Screen'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                FirebaseAuthServices().logout().then((value) {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (_) => LoginScreen(),
-                    ),
-                  );
-                });
-              },
-              icon: Icon(Icons.exit_to_app))
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          addCatatan(context);
-        },
-        child: Icon(Icons.add),
-      ),
-      body: FutureBuilder<QuerySnapshot>(
-          future: getData(),
-          builder: (context, snapshot) {
-            print(snapshot.connectionState);
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.data?.docs.isEmpty ?? true) {
-                return Center(child: Text('no data'));
-              } else {
-                return ListView.builder(
-                  padding: EdgeInsets.all(8),
-                  itemCount: snapshot.data?.docs.length ?? 0,
-                  itemBuilder: (_, index) {
-                    var data = snapshot.data;
-                    return Dismissible(
-                      key: Key('${data?.docs[index]}'),
-                      background: Container(
-                        color: Colors.red,
-                      ),
-                      confirmDismiss: (_) async {
-                        FirebaseDBServices()
-                            .deleteCatatan(data?.docs[index].id);
-                        setState(() {});
-                        return true;
-                      },
-                      onDismissed: (_) {
-                        // showDialog(context: context, builder: );
-                      },
-                      child: Card(
-                        child: ListTile(
-                          title: Text('${data?.docs[index]['judul']}'),
-                          subtitle: Text('tanggal catatan'),
-                          trailing: IconButton(
-                            onPressed: () {
-                              editCatatan(context,
-                                  uidCatatn: '${data?.docs[index].id}',
-                                  judul: '${data?.docs[index]['judul']}',
-                                  isi: '${data?.docs[index]['isi']}');
-                            },
-                            icon: Icon(Icons.edit),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                );
-              }
-            } else {
-              return Center(child: Text(''));
-            }
-          }),
-    );
+  Future<QuerySnapshot<Map<String, dynamic>>> getData() async {
+    var box = await Hive.openBox('userBox');
+    var uid = await box.get('uid');
+    var hasil = await FirebaseDBServices().getCatatan(uid);
+    // setState(() {});
+    return hasil;
   }
 }
