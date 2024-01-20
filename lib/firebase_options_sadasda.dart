@@ -44,37 +44,40 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBJD27yhVJb1pZ27a0mjtaRMasvZfCOA70',
-    appId: '1:1006522278590:web:8fcd2d27ec46c11375f4ef',
-    messagingSenderId: '1006522278590',
-    projectId: 'catatan-kelas-c',
-    authDomain: 'catatan-kelas-c.firebaseapp.com',
-    storageBucket: 'catatan-kelas-c.appspot.com',
+    apiKey: 'AIzaSyAjbaZ9XmJNyT28zPqcEjYnDQXh93Uiy6w',
+    appId: '1:344813659013:web:dbb4c1213a4499863d1aec',
+    messagingSenderId: '344813659013',
+    projectId: 'catatan-harian-2139e',
+    authDomain: 'catatan-harian-2139e.firebaseapp.com',
+    storageBucket: 'catatan-harian-2139e.appspot.com',
+    measurementId: 'G-7KLKDGK14X',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyC0cIYi5TgVp9uO5OVFpG4wMliz-eQ2tlo',
-    appId: '1:1006522278590:android:5053e879976b7cb575f4ef',
-    messagingSenderId: '1006522278590',
-    projectId: 'catatan-kelas-c',
-    storageBucket: 'catatan-kelas-c.appspot.com',
+    apiKey: 'AIzaSyBcUaJEazrUsVWJ4FGO3zmsxQRiRuPCgfo',
+    appId: '1:344813659013:android:62ee01f817fdcaf83d1aec',
+    messagingSenderId: '344813659013',
+    projectId: 'catatan-harian-2139e',
+    storageBucket: 'catatan-harian-2139e.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAu4P1pSl9JBx25fmuuNryHOFo10Fd4PFo',
-    appId: '1:1006522278590:ios:c3e517efc3daa58f75f4ef',
-    messagingSenderId: '1006522278590',
-    projectId: 'catatan-kelas-c',
-    storageBucket: 'catatan-kelas-c.appspot.com',
+    apiKey: 'AIzaSyA0bUdS1Qu6Zu2p8RAuJxcuXF7H6KPjfJ0',
+    appId: '1:344813659013:ios:23b7af24b0a254983d1aec',
+    messagingSenderId: '344813659013',
+    projectId: 'catatan-harian-2139e',
+    storageBucket: 'catatan-harian-2139e.appspot.com',
+    iosClientId: '344813659013-b81l2sprbper72r38887ho6l053n9eoe.apps.googleusercontent.com',
     iosBundleId: 'dev.triyono.catatanHarian',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAu4P1pSl9JBx25fmuuNryHOFo10Fd4PFo',
-    appId: '1:1006522278590:ios:c3e517efc3daa58f75f4ef',
-    messagingSenderId: '1006522278590',
-    projectId: 'catatan-kelas-c',
-    storageBucket: 'catatan-kelas-c.appspot.com',
+    apiKey: 'AIzaSyA0bUdS1Qu6Zu2p8RAuJxcuXF7H6KPjfJ0',
+    appId: '1:344813659013:ios:23b7af24b0a254983d1aec',
+    messagingSenderId: '344813659013',
+    projectId: 'catatan-harian-2139e',
+    storageBucket: 'catatan-harian-2139e.appspot.com',
+    iosClientId: '344813659013-b81l2sprbper72r38887ho6l053n9eoe.apps.googleusercontent.com',
     iosBundleId: 'dev.triyono.catatanHarian',
   );
 }

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:catatan_harian/screen/login_screen.dart';
 import 'package:catatan_harian/screen/splash_screen.dart';
 import 'package:catatan_harian/services/firebase_auth_services.dart';
@@ -47,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: FutureBuilder<QuerySnapshot>(
           future: getData(),
           builder: (context, snapshot) {
+            print(snapshot.connectionState);
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             } else if (snapshot.connectionState == ConnectionState.done) {
@@ -68,6 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             .deleteCatatan(data?.docs[index].id);
                         setState(() {});
                         return true;
+                      },
+                      onDismissed: (_) {
+                        // showDialog(context: context, builder: );
                       },
                       child: Card(
                         child: ListTile(
@@ -236,6 +238,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var box = await Hive.openBox('userBox');
     var uid = await box.get('uid');
     var hasil = await FirebaseDBServices().getCatatan(uid);
+    // setState(() {});
     return hasil;
   }
 }
