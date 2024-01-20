@@ -13,7 +13,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController passwordController = TextEditingController();
   FirebaseAuthServices fbServices = FirebaseAuthServices();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +46,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: 'Password',
-                hintText: 'Masukkan Password',
+                hintText: 'Masukkan Password minimal 8 karakter',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
@@ -88,5 +87,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
       );
     });
   }
-
 }
